@@ -1,0 +1,45 @@
+.spinner-container{
+          margin-top: 100px;
+          
+
+}
+
+
+.spinn{
+
+  
+     border: 2px solid #ccc; 
+     padding: 20px; 
+     background-color: #66c1ebb4; 
+     border-radius: 10px;
+      height: 75px;
+      display: flex;
+      align-items: center;
+        justify-content: center;
+  
+}
+p{
+ justify-self: center;
+ font-weight: 600;
+}
+
+.spinner-container div{
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 10px;
+}
+.spinner-header{
+    justify-self: center;
+    position: fixed;
+    top: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgb(122, 120, 120);
+          z-index: 1000;
+          display: flex;
+          width: 100%;
+          justify-content: center;
+            align-items: center;
+            margin: 0;
+
+}

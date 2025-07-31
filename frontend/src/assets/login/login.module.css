@@ -1,0 +1,93 @@
+.loginBody {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    box-sizing: border-box;
+     margin: 0;
+     font-family: Arial, sans-serif;
+     font-size: 16px;
+     color: #333;
+
+
+}
+
+img {
+    width: 120%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.loginContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 80vh;
+    padding: 2rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 500px;
+    background-color: #f0f0f0;
+    box-sizing: border-box;
+
+
+}
+.loginForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+}
+.formGroup{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    justify-content: center;
+    align-items: center;
+    
+}
+.formGroup input{
+   
+    width: 100%;
+    padding: 10px;
+    outline: none;
+    border: none;
+    border-radius: 8px;
+    margin: 5px;
+}
+.formGroup label{
+   
+margin-right: auto;
+}
+ .loginCheck{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 85%;
+ }
+form button{
+    padding: 10px 15px;
+    border: none;
+    border-radius: 15px;
+    background-color: #34353520;
+ margin-left: auto;
+    cursor: pointer;
+    font-size: 16px;
+   
+}
+form button:hover{
+   
+    background-color: #34353527;
+ 
+}
+.spinnerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+ 
+}
