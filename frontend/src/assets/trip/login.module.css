@@ -11,8 +11,11 @@
 
 
 }
+input{
+    background-color: rgb(255, 255, 255);
+}
 
-img {
+.logoImg {
     width: 120%;
     height: auto;
     margin-bottom: 20px;

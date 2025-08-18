@@ -1,59 +1,37 @@
-// server.js - The backend for the budget app, configured for Railway deployment
+// server.js - The backend for the budget app
 import express from 'express';
 import { Pool } from 'pg';
 import cors from 'cors';
 
 const app = express();
 app.use(express.json());
+app.use(cors({ origin: 'http://127.0.0.1:5500' }));
 
-// This is necessary because the frontend is on a different domain (localhost)
-app.use(cors());
-import dotenv from 'dotenv';
-dotenv.config();
-const SECRET_KEY = process.env.SECRET_KEY;
-console.log('Loaded secret key:', SECRET_KEY);
-
+// A simple way to parse URL-encoded bodies for requests
+// It allows you to access form data submitted via POST requests.
 app.use(express.urlencoded({ extended: true }));
 
-// =======================================================================
-// ============= IMPORTANT: UPDATED DATABASE CONFIG FOR RAILWAY ==========
-// =======================================================================
-// We are now using the DATABASE_URL environment variable provided by Railway.
-// The `pg` library is smart enough to parse this URL and connect to the
-// PostgreSQL database service automatically.
+
+
+// PostgreSQL database connection pool
 const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: process.env.DB_NAME,
+    password: process.env.DB_PASSWORD,
+    port: process.env.DB_PORT,
 });
 
-// Function to create the necessary tables if they don't exist
-
-console.log('hello');
+/* 
+const pool = new Pool({
+    user: 'postgres1',
+    host: process.env.DB_HOST,
+    database: process.env.DB_NAME,
+    password: process.env.DB_PASSWORD,
+    port: process.env.DB_PORT,
+}); */
 
 // --- API Routes ---
-
-
-app.get('/api/login',  async (req, res) => {
-
-    
-
-
-
-    
-    try {
-        
-
-
-      
-
-        res.json({
-
-          
-        });
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to load content' });
-    }
-
-});
 
 // Get the budget
 app.get('/api/budget', async (req, res) => {
@@ -82,19 +60,7 @@ app.post('/api/budget', async (req, res) => {
 app.get('/api/expenses', async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM expenses ORDER BY timestamp DESC');
-        const categoryTotals = await pool.query(`SELECT 
-  category, 
-  SUM(amount) AS total,
-  ROUND(SUM(amount) * 100.0 / (SELECT SUM(amount) FROM expenses), 2) AS percentage
-FROM expenses
-GROUP BY category
-ORDER BY total DESC;`);
-        
-
-        res.status(200).json({
-  expenses: result.rows,
-  categories: categoryTotals.rows
-});
+        res.status(200).json(result.rows);
     } catch (err) {
         console.error('Error fetching expenses:', err);
         res.status(500).send('Server Error');
@@ -163,8 +129,6 @@ app.delete('/api/expenses', async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
-
-
 
 // Start the server
 const PORT = process.env.PORT || 3020;

@@ -1,4 +1,6 @@
-import styles from './login.module.css';
+
+
+ import styles from './login.module.css';
 import { useState, useEffect } from 'react';
 import {  BeatLoader } from 'react-spinners'; // Or choose another spinner!
 
@@ -20,26 +22,27 @@ export function Login() {
     const handleLogin = async (event) => {
         event.preventDefault();
         setLoading(true);
-        const username = event.target.username.value;
+        const email = event.target.username.value;
         const password = event.target.password.value;
-        console.log('Login attempted with:', { username, password });
+        console.log('Login attempted with:', { email, password });
         try {
-            const response = await fetch('http://localhost:3010/api/login', {
+            const API_URL = 'https://trip-production-fa70.up.railway.app/api';
+            const response = await fetch(API_URL + '/signup', {
                 method: 'POST', // Use 'POST' for login
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ username, password }),
+                body: JSON.stringify({ email, password }),
             });
 
-            if (!response.ok) {
+            /* if (!response.ok) {
             
                 setNotSuccess(true);
                 setSuccess(false);
                 setError(null);
                return;
 
-            }
+            } */
         
             const data = await response.json();
             console.log('Login successful:', data);
@@ -68,7 +71,7 @@ export function Login() {
         <div className={styles.loginContainer}>
 
             <div>
-                <img src="/GNP-insurance-logo.png" alt="logo" />
+                <img className={styles.logoImg} src="logo.jpg" alt="logo" />
             </div>
 
 
@@ -123,31 +126,4 @@ export function Login() {
 
 
 
-
-
-
-/* 
-🎨 Spinner Components in react-spinners
-| Spinner Name      | Style Description |
-
-| ClipLoader        | Classic rotating circle | 
-| BeatLoader        | Bouncing dots | 
-| BounceLoader      | Single bouncing ball | 
-| CircleLoader      | Smooth circular spinner | 
-| ClimbingBoxLoader | Animated box climbing a wall | 
-| DotLoader         | Pulsing dots in a circle | 
-| FadeLoader        | Fading vertical bars | 
-| GridLoader        | 3x3 grid of pulsing squares | 
-| HashLoader        | Rotating hash symbol | 
-| MoonLoader        | Crescent moon-style spinner | 
-| PacmanLoader      | Pac-Man chomping animation | 
-| PropagateLoader   | Ripple-like wave animation | 
-| PuffLoader        | Expanding puff effect | 
-| PulseLoader       | Pulsing dots in a line | 
-| RingLoader        | Rotating ring | 
-| RiseLoader        | Rising vertical bars | 
-| RotateLoader      | Rotating lines | 
-| ScaleLoader       | Scaling vertical bars | 
-| SyncLoader        | Synchronized bouncing dots | 
- */
 
