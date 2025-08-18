@@ -3,17 +3,28 @@ import express from 'express';
 import { Pool } from 'pg';
 import cors from 'cors';
 
-const app = express();
-app.use(express.json());
 
-// This is necessary because the frontend is on a different domain (localhost)
-app.use(cors());
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
+
+
 dotenv.config();
+
+
+const app = express();
+
+app.use(express.json());
+app.use(cookieParser());
+app.use(cors());
+app.use(express.urlencoded({ extended: true }));
+// This is necessary because the frontend is on a different domain (localhost)
+
+
 const SECRET_KEY = process.env.SECRET_KEY;
 console.log('Loaded secret key:', SECRET_KEY);
 
-app.use(express.urlencoded({ extended: true }));
 
 // =======================================================================
 // ============= IMPORTANT: UPDATED DATABASE CONFIG FOR RAILWAY ==========
@@ -29,8 +40,59 @@ const pool = new Pool({
 
 console.log('hello');
 
-// --- API Routes ---
 
+
+const SESSION_DURATION_SECONDS = 60 * 60 * 24; // 1 day
+
+app.post('/api/signup', async (req, res) => {
+  const { email, password } = req.body;
+
+  // Basic validation
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Email and password are required.' });
+  }
+
+  try {
+    // Check if user already exists
+    const existingUser = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+    if (existingUser.rows.length > 0) {
+      return res.status(409).json({ message: 'Email already registered.' });
+    }
+
+    // Hash password
+    const passwordHash = await bcrypt.hash(password, 10);
+
+    // Create user
+    const result = await pool.query(
+      `INSERT INTO users (email, password_hash) VALUES ($1, $2) RETURNING id, email`,
+      [email, passwordHash]
+    );
+    const user = result.rows[0];
+
+    // Create JWT
+    const token = jwt.sign(
+      { userId: user.id, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: SESSION_DURATION_SECONDS }
+    );
+
+    // Set cookie
+    res.cookie('authToken', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: SESSION_DURATION_SECONDS * 1000
+    });
+
+    res.status(201).json({
+      message: 'User registered successfully.',
+      user: { id: user.id, email: user.email }
+    });
+  } catch (err) {
+    console.error('Signup error:', err);
+    res.status(500).json({ message: 'Server error during signup.' });
+  }
+});
 
 app.get('/api/login',  async (req, res) => {
 
@@ -56,15 +118,22 @@ app.get('/api/login',  async (req, res) => {
 });
 
 // Get the budget
+
 app.get('/api/budget', async (req, res) => {
     try {
-        const result = await pool.query('SELECT amount FROM budget WHERE id = 1');
-        res.status(200).json(result.rows[0]);
+        const budgetResult = await pool.query('SELECT amount FROM budget WHERE id = 1');
+        const expensesResult = await pool.query('SELECT SUM(amount) AS total_amount FROM expenses');
+
+        res.status(200).json({
+            budget: budgetResult.rows[0].amount,
+            totalExpenses: expensesResult.rows[0].total_amount
+        });
     } catch (err) {
         console.error('Error fetching budget:', err);
         res.status(500).send('Server Error');
     }
 });
+
 
 // Update the budget
 app.post('/api/budget', async (req, res) => {
