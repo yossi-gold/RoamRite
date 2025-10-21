@@ -1,0 +1,588 @@
+.infoHeader {
+
+    background: linear-gradient(to bottom right, #d4ebfb, #cae8fd);
+    height: 80px;
+    font-family: Arial;
+    border-top-left-radius: 1.5rem;
+    border-top-right-radius: 1.5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 35px;
+    padding-right: 35px;
+
+
+}
+
+.leftSection {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+
+}
+
+.tripsButton,
+.tripsButtonSmall,
+.locationButton,
+.locationButtonSmall {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    background-color: #fff;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease-in-out;
+    font-weight: 600;
+    /*  max-height: 40px; */
+    box-sizing: border-box;
+
+}
+
+.tripsButton,
+.tripsButtonSmall {
+    border-left: 4px solid #3b82f6;
+}
+
+.locationButton,
+.locationButtonSmall {
+
+    border-left: 4px solid #4bf63b;
+}
+
+.tripsButtonSmall,
+.locationButtonSmall {
+    display: none;
+}
+
+
+.tripsButton .p,
+.locationButton .p {
+    display: inline-block;
+}
+
+@media (max-width: 600px) {
+    .tripsButtonSmall,
+.locationButtonSmall {
+    display: flex;
+}
+.tripsButton,
+.locationButton {
+    display: none;
+}
+
+}
+
+.profile {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.781);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #cae8fd;
+    font-size: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    position: relative;
+}
+
+.userSettings button {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+}
+
+
+.userSettings {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    position: absolute;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 0.5rem;
+    /*   padding: 1rem; */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease-in-out;
+  
+    top: 85px;
+    right: 0;
+
+    z-index: 2000;
+    width: 200px;
+}
+
+.userSettingsBottom {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* gap: 10px; */
+    width: calc(100% - 14px);
+    margin: 7px;
+    background-color: rgba(200, 200, 200, 0.24);
+    border-radius: 5px;
+
+
+
+
+
+
+
+}
+
+.userSettingsBottom button,
+.userSettingsBottom a {
+    width: fit-content;
+    padding: 10px;
+
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: auto;
+}
+
+
+.container {
+    max-width: 90vw;
+   
+   
+   
+   
+
+
+}
+.buttonContainer {
+    width: 100%;
+
+}
+
+.buttonContainer a {
+    font-size: 14px;
+
+}
+
+.userSettingsBottom button svg,
+.userSettingsBottom a svg {
+    margin-right: 10px;
+}
+
+.userSettingsBottom hr {
+    width: 90%;
+    border: 0.5px solid #d3d3d3;
+    margin: 0;
+}
+
+.profileInSettings {
+    border-radius: 50%;
+    width: 55px;
+    height: 55px;
+    background-color: rgba(0, 0, 0, 0.781);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #cae8fd;
+    font-size: 25px;
+    font-weight: bold;
+    align-self: center;
+    justify-self: center;
+
+}
+
+.userSettingsprofileContainer {
+    padding: 20px;
+    padding-bottom: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.addnewTrip,
+.generateHistorySummary {
+
+    border-radius: 8px;
+
+    box-sizing: border-box;
+    padding: 7px 15px;
+    cursor: pointer;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    border: 1px rgba(94, 93, 93, 0.153) solid;
+    font-weight: 600;
+
+}
+
+.addnewTrip:hover,
+.generateHistorySummary:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transition: box-shadow, transform 0.3s ease;
+    transform: matrix(1.05, 0, 0, 1.05, 0, 0);
+}
+
+.tripsButtons {
+    /* display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-top: 30px;
+    gap: 10px; */
+
+    border-radius: 8px;
+    display: none;
+    justify-self: center;
+
+}
+
+.tripContent {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+}
+
+.tripsInfoHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 30px 0px 30px 0px;
+
+}
+
+.tripsInfoHeader h2 {
+    font-size: 24px;
+    font-weight: 700;
+    flex: 1;
+    margin: 0;
+}
+
+.summaryAllTripsContainer {
+
+    overflow: hidden;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(107, 114, 128, 0.5) transparent;
+    max-height: 55vh;
+
+}
+
+.historySummary {
+    background: linear-gradient(to bottom, #cae8fd, #ebf6fd);
+    padding: 5px 15px;
+    border-radius: 8px;
+
+}
+
+.historySummaryHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+}
+
+.historySummary h1 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    margin-top: 8px;
+}
+
+.iconContainer,
+.add {
+    border: black 1px dashed;
+    border-radius: 50%;
+    padding: 3px;
+}
+
+.add {
+    visibility: visible;
+}
+
+.AllTripsContainer {
+
+
+
+    display: grid;
+    /*  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); */
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    padding: 10px;
+    background-color: #ebf6fd;
+
+
+}
+
+@keyframes slideInRight {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+
+.tripItem {
+    display: flex;
+    flex-direction: row;
+
+
+    align-items: center;
+    animation: slideInRight 0.6s ease-out forwards;
+
+}
+
+.tripItem:hover {
+
+    /*  scale: 1.02; */
+}
+
+.eachTripInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    padding: 1rem;
+    text-align: left;
+
+    align-self: flex-start;
+}
+
+.setAsCurrentTripButton {
+
+    align-self: flex-start;
+}
+
+.setAsCurrentTrip {
+    border-radius: 8px;
+    padding: 6px;
+    cursor: pointer;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.086);
+    border: 1px rgba(94, 93, 93, 0.153) solid;
+    font-size: 12px;
+    font-weight: bold;
+
+
+}
+
+.setAsCurrentTrip:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transition: box-shadow, transform 0.3s ease;
+    transform: matrix(1.05, 0, 0, 1.05, 0, 0);
+}
+
+.noTrips {
+    display: flex;
+    flex-direction: column;
+
+    justify-self: center;
+    margin-top: 15vw;
+}
+
+.noTrips h3 {
+    font-size: 19px;
+    font-weight: 600;
+}
+
+.noTrips a {
+    background-color: #d4ebfb;
+    border: 1px rgba(143, 142, 136, 0.611) solid;
+    width: 100%;
+    border-radius: 15px;
+    padding: 5px;
+    max-width: 550px;
+    align-self: center;
+}
+
+.noTrips a:hover {
+    background-color: #bbe0fa;
+    border: 1px rgba(172, 171, 164, 0.611) solid;
+    transform: scale(1.05);
+    transition: transform 0.2s ease-in-out;
+
+
+}
+
+
+/* .tripImage{
+  
+    width: 25vw;
+    background-size: cover;
+    background-position: center; 
+    background-repeat: no-repeat;
+    height: 100px;
+    max-height: 100px; 
+    border-radius: 8px;
+} */
+.tripImage {
+    width: 20vw;
+    aspect-ratio: 16 / 8;
+    /* or whatever ratio fits your image */
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 8px;
+    margin: 0.5rem;
+}
+
+.tripImageOverlay {
+    background-color: #bbe0fa6c;
+    background-color: rgba(209, 206, 206, 0.551);
+    /* medium gray */
+    backdrop-filter: blur(15px);
+    height: 100%;
+    width: calc(20vw + 1rem);
+    position: absolute;
+    top: 0;
+    right: 0;
+    animation: slideInRight 0.5s ease-out forwards;
+
+    align-items: center;
+    justify-content: center;
+    border-radius: 0 8px 8px 0;
+}
+
+
+.exit {
+    animation: slideOutRight 0.5s ease forwards;
+}
+
+.tripImageOverlay svg {
+
+    fill: rgb(17, 14, 16);
+    height: 50%;
+    width: 50%;
+
+
+}
+
+@media (min-width: 1024px) {
+    .AllTripsContainer {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .tripContent {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .tripImage {
+        width: 15vw;
+        aspect-ratio: 16 / 8;
+        /* or whatever ratio fits your image */
+
+    }
+
+    .tripsButtons {
+        display: block;
+    }
+
+    .add {
+        visibility: hidden;
+    }
+}
+
+@media (max-width: 768px) {
+    .AllTripsContainer {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .tripItem {
+        flex-direction: column-reverse;
+    }
+
+    .tripImage {
+        width: 100%;
+        aspect-ratio: 16 / 8;
+        /* or whatever ratio fits your image */
+        margin: 0;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+}
+
+@media (max-width: 580px) {
+    .AllTripsContainer {
+        grid-template-columns: 1fr;
+    }
+
+    .tripItem {
+        flex-direction: column-reverse;
+    }
+
+    .tripImage {
+        width: 100%;
+        aspect-ratio: 16 / 8;
+        /* or whatever ratio fits your image */
+        margin: 0;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+}
+
+
+.headers {
+    padding: 0;
+}
+
+.fancyCard1 {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border-radius: 1.5rem;
+    /* More rounded corners */
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    /*   padding: 2.5rem; */
+    animation: fadeIn 0.8s ease-out;
+}

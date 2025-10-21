@@ -1,0 +1,145 @@
+
+:root {
+  --color-primary: 19, 182, 236; /* set primary color */
+   --color-text-default: 16, 29, 34; 
+}
+
+
+.main{
+    height: 85vh;
+    
+    overflow-y: auto;
+   
+   
+}
+
+.section1{
+  
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.6) 100%), url("./travel2.png");
+                   
+
+}
+.featuresSection{
+/*      background-color: #f5f5f0; */
+background: linear-gradient(to bottom right, #d4ebfb, #cae8fd);
+      
+padding: 2rem 0 4rem 0; 
+}
+.featuresSection h2{
+    padding-bottom: 2rem;
+}
+
+
+
+
+
+.gridContainer{
+    
+    
+}
+.gridItem{
+    background-color: white;
+}
+
+
+.contectUsH2 {
+  margin-bottom: 3rem;        
+  text-align: center;         
+  font-size: 1.875rem;       
+  line-height: 2.25rem;       
+  font-weight: 700;         
+}
+
+
+
+
+.contectUsIcon {
+  margin-top: 0.25rem;     
+  display: flex;             
+  height: 2.5rem;            
+  width: 2.5rem;           
+  flex-shrink: 0;            
+  align-items: center;       
+  justify-content: center;   
+  border-radius: 9999px;     
+  background-color: rgba(var(--color-primary), 0.2); 
+   color: rgb(var(--color-primary));                 
+   
+}
+
+.eachContectUsInfo {
+  color: rgba(var(--color-text-default), 0.7);
+
+  font-family: Spline Sans;
+}
+
+.formLabel {
+  margin-bottom: 0.5rem;   
+  display: block;         
+  font-size: 0.875rem;    
+  line-height: 1.25rem;   
+  font-weight: 500;       
+}
+
+
+.formTextarea,
+.formInput {
+  width: 100%; 
+  border-radius: 0.5rem;                  
+  border: 1px solid rgba(19, 182, 236, 0.3); 
+ 
+  padding: 0.75rem;                      
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.formTextarea:focus ,
+.formInput:focus {
+  border-color: rgba(var(--color-primary));     
+  outline: none;
+  box-shadow: 0 0 0 1px rgba(var(--color-primary)); 
+}
+
+.submitForm {
+  width: 100%;                   
+  border-radius: 0.5rem;         
+  background-color: rgba(var(--color-primary)); 
+  padding: 0.75rem 1.5rem;        
+  font-weight: 700;               
+  color: #fff;                    
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+  transition: transform 0.2s;  
+  cursor: pointer;  
+}
+
+.submitForm:hover {
+  transform: scale(1.05);      
+}
+
+
+
+
+@media (min-width: 640px) {
+  .contectUsH2{
+    font-size: 2.25rem;       
+    line-height: 2.5rem;     
+  }
+  .featuresSection {
+         padding: 3rem 0 6rem 0; 
+          
+    } 
+    .featuresSection h2{
+   padding-bottom: 3rem;
+}
+.submitForm {
+    width: auto;
+  }
+}
+.footer{
+     background-color: rgba(19, 182, 236, 0.9); /* bg-primary/90 */
+ /*  padding: 1rem;  */                     /* py-4 px-4 (16px) */
+  backdrop-filter: blur(4px);         /* backdrop-blur-sm */
+  color : white;
+}
+.footer a:hover{
+    color: #f5f5f0; 
+}

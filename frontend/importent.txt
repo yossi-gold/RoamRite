@@ -1,0 +1,2 @@
+need to fix the frontend to handle that if for some reson there isnt a currant trip,
+in the backend when a user delete a trip need to handle the currant trip id

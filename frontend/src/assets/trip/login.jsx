@@ -1,14 +1,27 @@
 
 
- import styles from './login.module.css';
+import styles from './login.module.css';
 import { useState, useEffect } from 'react';
-import {  BeatLoader } from 'react-spinners'; // Or choose another spinner!
+import { useNavigate } from 'react-router-dom';
+
+
+
+import { LoginSignUpForm } from './log-sinup-form';
+const API_URL = 'https://trip-production-fa70.up.railway.app/api';
 
 export function Login() {
+
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState({
+        hasError: false,
+        message: null
+    });
     const [success, setSuccess] = useState(false);
-    const [notSuccess, setNotSuccess] = useState(false);
+    const [notSuccess, setNotSuccess] = useState({
+        wasntSuccess: false,
+        message: null
+    });
 
     useEffect(() => {
         document.title = "Login";
@@ -19,109 +32,88 @@ export function Login() {
     }, []);
 
 
+
+
+
     const handleLogin = async (event) => {
         event.preventDefault();
         setLoading(true);
+        setError({ hasError: false, message: null });
+        setSuccess(false);
+        setNotSuccess({
+            wasntSuccess: false,
+            message: null
+        });
+
         const email = event.target.username.value;
         const password = event.target.password.value;
-        console.log('Login attempted with:', { email, password });
+
         try {
-            const API_URL = 'https://trip-production-fa70.up.railway.app/api';
-            const response = await fetch(API_URL + '/signup', {
+            
+            console.log('mm');
+            const response = await fetch(API_URL + '/login', {
                 method: 'POST', // Use 'POST' for login
+                credentials: 'include', // ✅ Required for cookies
+
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ email, password }),
             });
 
-            /* if (!response.ok) {
-            
-                setNotSuccess(true);
-                setSuccess(false);
-                setError(null);
-               return;
 
-            } */
-        
-            const data = await response.json();
-            console.log('Login successful:', data);
-            setSuccess(true);
-            setNotSuccess(false);
-            setError(null);
-            // Redirect to dashboard or another page
-            window.location.href = '/dashboard'; // Change this to your desired redirect path
-           
-        } catch (error) {
-            setError(error);
-            setNotSuccess(false);
-            setSuccess(false);
-            console.error('Login error:', error);
-        } finally {
-            {
-                setLoading(false);
+            if (!response.ok) {
+
+                const data = await response.json();
+                console.log(data);
+                setNotSuccess({
+                    wasntSuccess: true,
+                    message: data.message
+                });
+                setSuccess(false);
+                setError({ hasError: false, message: null });
+                return;
+
             }
+
+            const data = await response.json();
+
+            console.log('Login successful:', data);
+
+            setSuccess(true);
+            setNotSuccess({
+                wasntSuccess: false,
+                message: null
+            });
+            setError({ hasError: false, message: null });
+            // Redirect to dashboard or another page
+
+            navigate('/add_expense');
+
+        } catch (error) {
+            console.error('Login failed:', error.message);
+            setError({ hasError: true, message: error?.message || 'Something went wrong.' });
+            setNotSuccess({
+                wasntSuccess: false,
+                message: null
+            });
+            setSuccess(false);
+
+        } finally {
+
+            setLoading(false);
+
 
         }
     }
 
+ 
+    return (<>
+        
    
-
-    return (
-        <div className={styles.loginContainer}>
-
-            <div>
-                <img className={styles.logoImg} src="logo.jpg" alt="logo" />
-            </div>
-
-
-
-            <form className={styles.loginForm} onSubmit={handleLogin}>
-
-                <div className={styles.formGroup}>
-                    <label htmlFor="username">Username or Email:</label>
-                    <input type="text" id="username" name="username" placeholder='Username or Email' required />
-                </div>
-                <div className={styles.formGroup}>
-                    <label htmlFor="password">Password:</label>
-                    <input type="password" id="password" name="password" placeholder='Password' required />
-                </div>
-                <div className={styles.loginCheck}>
-
-
-               
-                 {loading && (
-                    <div className={styles.spinnerContainer}>
-                         <BeatLoader color="black" size={10} />
-                    </div>
-                )}
-                {success && (
-                    <div>
-                        <p>Login successful!</p>
-                    </div>
-                )}
-                {notSuccess && (
-                    <div>
-                        <p>Login failed. Please check your credentials.</p>
-                    </div>
-                )}
-                {error && (
-                    <div>
-                        <p>{error.message}</p>
-                    </div>
-                )}
-                <button type="submit">Login</button>
-                 </div>
-               
-            </form>
-
-
-
-
-
-          
-        </div>
-    ); 
+        <LoginSignUpForm type="login" loading={loading} handleLogin={handleLogin} error={error} success={success} notSuccess={notSuccess} />
+    </>
+    );
 }
 
 

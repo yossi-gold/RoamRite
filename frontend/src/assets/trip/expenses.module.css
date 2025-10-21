@@ -1,0 +1,216 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to bottom right, #f0f9ff, #e0f2fe);
+    background-attachment: fixed;
+}
+
+/*     .container {
+           
+        } */
+.fancyCard {
+    background: rgba(255, 255, 255, 0.9);
+    
+    padding: 2.5rem;
+    animation: fadeIn 0.8s ease-out;
+     overflow-y: auto;
+    max-height: 85vh;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(107, 114, 128, 0.5) transparent;
+}
+
+.fancyButton {
+    transition: all 0.2s ease-in-out;
+}
+
+.fancyButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.expenseItem {
+    animation: slideIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* New styles for the interactive spending ring */
+.spendingRingContainer {
+    position: relative;
+   
+    margin: 0 auto;
+
+
+}
+
+.spendingRingCenter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    z-index: 10;
+}
+
+.spendingRingCenter p {
+    transition: all 0.3s ease-in-out;
+}
+
+/* UPDATED: Custom styling for the spending summary card with a radial gradient */
+.spendingSummaryCard {
+    background: radial-gradient(circle at top left, #dbeafe, #c4b5fd, #a5b4fc, #bbf2ff);
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.seeCategoriesButton {
+    border-radius: 8px;
+
+    box-sizing: border-box;
+    padding: 15px;
+    cursor: pointer;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    border: 1px rgba(94, 93, 93, 0.153) solid;
+    margin-bottom: 2.5rem;
+    font-weight: 500;
+    font-size: 20px;
+    display: flex;
+    width: 100%;
+    max-width: 800px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    justify-self: center;
+
+}
+
+.seeCategoriesButton:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transition: box-shadow, transform 0.3s ease;
+    /* transform: matrix(1.05, 0, 0, 1.05, 0, 0); */
+
+}
+
+@keyframes slideInRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateX(0); }
+  to { opacity: 0; transform: translateX(100%); }
+}
+
+.categoryCardsContainer{
+     will-change: transform, opacity;
+
+     animation: slideInRight 0.6s ease-out forwards;
+     
+}
+
+
+.fadeOut {
+  animation: fadeOut 0.5s ease-in forwards;
+}
+
+ .seeCategoriesSvg {
+  transform: rotate(90deg);              /* Applies the rotation */
+  transition: transform 0.6s ease;       /* Animates the rotation smoothly */
+}
+
+ .fadeOutSvg {
+  transform: rotate(0deg);              /* Applies the rotation */
+  transition: transform 0.6s ease;       /* Animates the rotation smoothly */
+}
+.deleteModalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+.visible {
+    opacity: 1;
+    visibility: visible;
+}
+.confirmDeleteButton{
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.confirmDeleteButton:hover {
+    background-color: #d32f2f;
+}
+
+.cancelDeleteButton{
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.cancelDeleteButton:hover {
+    background-color: #388e3c;
+}
+.percentageBox{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  
+}
+.percentageBox p{
+    margin: 0;
+    margin-left: 10px;
+}
