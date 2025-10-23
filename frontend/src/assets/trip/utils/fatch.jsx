@@ -93,13 +93,13 @@ export async function setCurrentTrip(trip) {
 
 
 
-export async function fetchAndRenderAllData(navigate) {
+export async function fetchAndRenderAllData() {
 
 
     try {
         // Fetch budget
 
-        const budgetResponse = await fetch(`${API_URL}/totalTrips`,
+        const response = await fetch(`${API_URL}/totalTrips`,
             {
                 method: 'GET', // Use 'POST' for login
                 credentials: 'include', // ✅ Required for cookies
@@ -107,21 +107,27 @@ export async function fetchAndRenderAllData(navigate) {
             }
         );
         // console.log(budgetResponse.status);
-        if (!budgetResponse.ok) {
-            console.log(budgetResponse.status);
-            if (budgetResponse.status === 401) {
-                navigate(); // or show a login modal
+        if (!response.ok) {
+            console.log(response.status);
+            if (response.status === 401) {
+                
+                
+                
+        return { data: '', status: response.status };
+              
             }
+            return { data: '', status: response.status };
+           
         }
-        const budgetData = await budgetResponse.json();
-        console.log(budgetData);
+        const data = await response.json();
+        console.log(data);
 
-        return budgetData;
+        return { data, status: response.status };
 
 
     } catch (error) {
         console.error("Error fetching data:", error);
-        return null;
+        return { data: '', status: error };
 
     }
 }
@@ -145,19 +151,28 @@ export const getUserInfo = async () => {
         if (!response.ok) {
             if (response.status === 401) {
                 console.warn('User not logged in');
-                return; // Exit early, don't set state
+                return { loggedIn: false, data: '', trips: false }; // Exit early, don't set state
             }
 
             throw new Error('Network response was not ok');
         }
+       
 
         const data = await response.json();
         console.log(data);
 
+         if (response.status === 202) {
+            return { loggedIn: true, data: data, trips: false };
 
-        return data;
+
+        }
+
+
+
+        return { loggedIn: true, data: data, trips: true };
     } catch (error) {
         console.error('Error fetching user info:', error);
+        return { loggedIn: false, data: '', trips: false };
     }
 };
 
@@ -204,7 +219,7 @@ export async function fetchAndRenderExpenses(navigate, currentTripId) {
 }
 
 
-export async function sendMessage(userMessage) {
+export async function sendMessage(name, email, userMessage) {
 
     console.log(userMessage);
 
@@ -217,7 +232,7 @@ export async function sendMessage(userMessage) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ userMessage })
+            body: JSON.stringify({ name, email, userMessage })
 
 
         });
@@ -226,7 +241,7 @@ export async function sendMessage(userMessage) {
             console.log(response.status);
             const data = await response.json();
             const error = data.message;
-            return { error };
+            return { error, success: false };
         }
 
 
@@ -234,7 +249,7 @@ export async function sendMessage(userMessage) {
         console.log(data);
 
 
-        return [{ error: '' }]
+        return { error: '', success: true }
 
 
 
@@ -250,17 +265,17 @@ export async function sendMessage(userMessage) {
 
 
 export async function checkIfLoggedIn() {
-  try {
-    const response = await fetch(`${API_URL}/test`, {
-      method: 'GET',
-      credentials: 'include',
-    });
+    try {
+        const response = await fetch(`${API_URL}/test`, {
+            method: 'GET',
+            credentials: 'include',
+        });
 
-    console.log('Login check status:', response.status);
-    return response.ok; // true if status is 2xx, false otherwise
-    
-  } catch (error) {
-    console.error('Login check failed:', error);
-    return false;
-  }
+        console.log('Login check status:', response.status);
+        return response.ok; // true if status is 2xx, false otherwise
+
+    } catch (error) {
+        console.error('Login check failed:', error);
+        return false;
+    }
 }

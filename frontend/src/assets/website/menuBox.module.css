@@ -1,0 +1,60 @@
+
+.openMenu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    position: absolute;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 0.5rem;
+    /*   padding: 1rem; */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease-in-out;
+  
+    top: 85px;
+    left: 0;
+
+    z-index: 2000;
+    width: 200px;
+}
+
+.menuSettingsBottom {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; 
+    width: calc(100% - 14px);
+    margin: 7px;
+    
+    border-radius: 5px;
+
+
+
+
+}
+.menuButton {
+    width: 100%;
+    background-color: rgba(200, 200, 200, 0.24);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+   color: black;
+    font-size: 16px;
+   
+    font-weight: 500;
+    padding: 5px 10px;
+    border-radius: 5px;
+    
+
+}
+@media (min-width: 769px) {
+    .openMenu {
+        display: none;
+    }
+
+}

@@ -5,6 +5,7 @@ import styles from './about.module.css';
 import { Link } from 'react-router-dom';
 import { sendMessage, checkIfLoggedIn } from '../utils/fatch.jsx';
 import { useState, useEffect } from 'react';
+import { ClipLoader } from "react-spinners";
 
 
 
@@ -48,6 +49,7 @@ export const About = () => {
     ]
 
     const [loggedIn, setLoggedIn] = useState(false);
+  
 
     useEffect(() => {
         const checkLogin = async () => {
@@ -57,17 +59,30 @@ export const About = () => {
         };
         checkLogin();
     }, []);
-
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
     const [userMessage, setUserMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const [sent, setSent] = useState(false);
+    const [waiting, setWaiting] = useState(false);
 
     async function submitMessage(e) {
+
         e.preventDefault();
+        setWaiting(true);
         setErrorMessage('');
-        const response = await sendMessage(userMessage);
+        const response = await sendMessage(name, email, userMessage);
+        setWaiting(false);
         console.log(response);
         if (response.error) {
             setErrorMessage(response.error);
+        }
+        if(response.success){
+            setSent(true);
+            setTimeout(() => {
+                setSent(false);
+            }, 2000);
+
         }
 
     }
@@ -135,18 +150,18 @@ export const About = () => {
                                     {!loggedIn && <>
                                         <div>
                                             <label className={styles.formLabel} htmlFor="name">Your Name</label>
-                                            <input className={styles.formInput} id="name" placeholder="Enter your name" type="text" />
+                                            <input className={styles.formInput} onChange={(e) => setName(e.target.value)} value={name} id="name" placeholder="Enter your name" type="text" required/>
                                         </div>
                                         <div>
                                             <label className={styles.formLabel} htmlFor="email">Your Email</label>
-                                            <input className={styles.formInput} id="email" placeholder="Enter your email" type="email" />
+                                            <input className={styles.formInput} onChange={(e) => setEmail(e.target.value)} value={email}  id="email" placeholder="Enter your email" type="email" required/>
                                         </div>
 
                                     </>}
 
                                     <div>
                                         <label className={styles.formLabel} htmlFor="message">Your Message</label>
-                                        <textarea className={styles.formTextarea} onChange={(e) => setUserMessage(e.target.value)} value={userMessage} id="message" placeholder="Enter your message" rows="5" ></textarea>
+                                        <textarea className={styles.formTextarea} onChange={(e) => setUserMessage(e.target.value)} value={userMessage} id="message" placeholder="Enter your message" rows="5" required></textarea>
 
 
 
@@ -162,8 +177,16 @@ export const About = () => {
 
                                     </div>
                                     <span style={{ fontSize: '13px', color: 'red' }}>{errorMessage} </span>
-
-                                    <button className={styles.submitForm} type="submit">Send Message</button>
+                                        {sent?   
+                                        <p className={styles.thankYou}>Thank You</p> : 
+                                          <button className={`${styles.submitForm} ${waiting? styles.submitFormWaiting: ''}`} disabled={waiting}  type="submit">
+                                           {waiting? <ClipLoader size={20}/> :'Send Message'}
+                                           
+                                            
+                                            </button>
+                                        }
+                                        {console.log(sent)}
+                                  
                                 </form>
                                 <div className="flex flex-col gap-8">
                                     <div className="flex items-start gap-4">

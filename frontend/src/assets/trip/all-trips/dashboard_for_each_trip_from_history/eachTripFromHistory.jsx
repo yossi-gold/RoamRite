@@ -1,29 +1,28 @@
 
 import { useEffect, useState } from "react";
-import { fetchAndRenderData, setCurrentTrip } from "../../utils/fatch";
+import { fetchAndRenderData, setCurrentTrip , fetchAndRenderExpenses} from "../../utils/fatch";
 import { useParams } from "react-router-dom";
 import { ClipLoader } from 'react-spinners';
 import { useTripInfo } from "../../context";
 import styles from './eachTripFromHistory.module.css';
 import { convert } from "../../utils/dateConverter";
 import { useNavigate } from "react-router-dom";
-import { fetchAndRenderExpenses } from '../../utils/fatch';
-import { CategoryBreakdown } from '../../categoryCards';
-import { RenderExpensesPage } from '../../expenses'
+import { CategoryBreakdown } from '../../categoryCards/categoryCards';
+import { RenderExpensesPage } from '../../expenses/expenses'
 
 
 export function OldTripDashboard() {
-    const navigate = useNavigate
-    const { currentTripId, setCurrentTripId, setTrip_name } = useTripInfo();
-    // const [data, setData] = useState([]);
+    const navigate = useNavigate();
+    const { currentTripId, setCurrentTripId, setTrip_name, loadingUserInfo } = useTripInfo();
+  
     const id = Number(useParams().id);
     const [totalSpent, setTotalSpent] = useState(NaN);
     const [budget, setBudget] = useState(NaN);
     const [currentTripName, setCurrentTripName] = useState('');
-    const [tripImg, setTripImg] = useState('/tripCoin/1.jpg');
+    const [tripImg, setTripImg] = useState('/1.jpg');
     const [startDate, setStartDate] = useState(false);
     const [endDate, setEndDate] = useState(false);
-    /* const [currentTripId, setCurrentTripId] = useState(NaN); */
+   
     const [loading, setLoading] = useState(false);
     const [categories, setCategories] = useState([]);
     const [destination, setDestination] = useState('unknown');
@@ -41,7 +40,7 @@ export function OldTripDashboard() {
                 console.log(data);
                 if (data) {
                     setTotalSpent(data.totalSpent);
-                    //setCurrentTripId(data.currentTripId)
+                  
 
                     setCurrentTripName(data.trip.trip_name);
                     setDestination(data.trip.destination);
@@ -50,7 +49,7 @@ export function OldTripDashboard() {
                     setEndDate(convert(data.trip.end_date));
 
                     setBudget(Number(data.trip.budget));
-                    data.trip.img ? setTripImg(data.trip.img) : setTripImg('/tripCoin/1.jpg');
+                    data.trip.img ? setTripImg(data.trip.img) : setTripImg('/1.jpg');
 
                 } else {
                     console.log('invalid')
@@ -60,16 +59,22 @@ export function OldTripDashboard() {
 
 
             }
+                 if (loadingUserInfo) return;
+            if(currentTripId){
             getData();
+            } else{
+                navigate('/all_trips');
+            }
+            
         } catch (error) {
             console.error("Error fetching data:", error);
         }
 
-    }, [])
+    }, [currentTripId, loadingUserInfo])
 
 
     useEffect(() => {
-        fetchAndRenderData();
+       
 
         async function fetchExpensesData() {
             try {
@@ -87,11 +92,17 @@ export function OldTripDashboard() {
                 console.error("Error fetching data:", error);
             }
         }
-        fetchExpensesData();
+        if (loadingUserInfo) return;
+        if(currentTripId){
+             fetchAndRenderData();
+             fetchExpensesData();
+
+        }
+        
 
 
 
-    }, [id])
+    }, [id, loadingUserInfo])
 
 
     return (

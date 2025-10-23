@@ -15,7 +15,7 @@
 
 .section1{
   
-    background-image: linear-gradient(rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.6) 100%), url("./travel2.png");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.6) 100%), url("/travel2.png");
                    
 
 }
@@ -109,11 +109,67 @@ padding: 2rem 0 4rem 0;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
   transition: transform 0.2s;  
   cursor: pointer;  
+ 
 }
+
+.submitFormWaiting {
+  width: 100%;                   
+  border-radius: 0.5rem;         
+  background-color: rgba(51, 190, 237, 0.379); 
+  padding: 10px;
+  font-weight: 700;               
+  color: #fff;                    
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+  transition: transform 0.2s;  
+  cursor: not-allowed; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+ 
+    
+}
+
 
 .submitForm:hover {
   transform: scale(1.05);      
 }
+.submitFormWaiting:hover{
+  transform: none;      
+}
+
+
+@keyframes popIn {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.thankYou {
+  width: 100%;                   
+  border-radius: 0.5rem;         
+  background-color: black;
+  padding: 0.75rem 1.5rem;        
+  font-weight: 700;               
+  color: #fff;                    
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+  transition: transform 0.2s;  
+  cursor: pointer;  
+  text-align: center;
+    transform-origin: center;
+  animation: popIn 0.4s ease forwards;
+
+}
+
+
+
+
+
 
 
 
@@ -131,6 +187,9 @@ padding: 2rem 0 4rem 0;
    padding-bottom: 3rem;
 }
 .submitForm {
+    width: auto;
+  }
+  .thankYou {
     width: auto;
   }
 }

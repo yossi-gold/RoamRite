@@ -6,7 +6,8 @@ import App from './App.jsx';
 
 createRoot(document.getElementById('root')).render(
    <StrictMode>
-  <BrowserRouter basename="/tripCoin">
+  <BrowserRouter>
+   {/*  <BrowserRouter basename="/tripCoin"> */}
 
  
    

@@ -1,0 +1,170 @@
+.loginBody {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    box-sizing: border-box;
+     margin: 0;
+     font-family: Arial, sans-serif;
+     font-size: 16px;
+     color: #333;
+    
+
+
+}
+input{
+    background-color: rgb(255, 255, 255);
+}
+.logoContainer{
+    border-radius: 10px;
+/*     padding: 7px; */
+     /*  background-color: rgb(255, 255, 255); */
+}
+.logoImg {
+    width: 40%;
+    height: auto;
+    /* margin-bottom: 20px; */
+    align-self: center;
+    justify-self: center;
+    
+}
+
+
+.loginContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 90vh;
+    padding: 2rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 500px;
+   /*  background-color: #f0f0f0; */
+   background: linear-gradient(to bottom right, #d4ebfb, #cae8fd);
+    box-sizing: border-box;
+     
+     max-width: 95vw;
+
+
+}
+.loginForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+}
+.formGroup{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    
+}
+.formGroup2{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    
+}
+.formGroup input, .formGroup2 input{
+   
+    width: 100%;
+    padding: 10px;
+    outline: none;
+    border: none;
+    border-radius: 8px;
+    margin: 5px;
+}
+.passwordAndSvg{
+     width: 100%;
+     display: flex;
+     flex-direction: row;
+     align-items: center;
+     justify-content: space-between;
+     box-sizing: border-box;
+
+}
+.passwordSvg{
+    background-color: white;
+    height: calc(100% - 10px);
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    cursor: pointer;
+    
+}
+    .formGroup input.password, .formGroup2 input.password{
+    width: calc(100% - 40px);
+    box-sizing: border-box;
+    margin:5px 0 5px 0px;
+    flex: 1;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    
+}
+.formGroup label,.formGroup2 label{
+   
+margin-right: auto;
+}
+.signupOnly{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+ .loginCheck{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    
+ }
+.loginForm button{
+    padding: 10px 15px;
+    border: none;
+    border-radius: 15px;
+    background-color: #34353520;
+ margin-left: auto;
+    cursor: pointer;
+    font-size: 16px;
+
+   
+}
+.loginForm button:hover{
+   
+    background-color: #34353527;
+ 
+}
+.spinnerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+ 
+}
+@media screen and (max-width: 350px) {
+    .loginContainer{
+ 
+        overflow: hidden;
+        overflow-y: auto;
+        stroke-width: 1px;
+        scrollbar-width: none;
+        scroll-behavior: smooth;
+    }
+    .signupOnly{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+}

@@ -6,7 +6,7 @@
 
 
 import styles from "./tripHistory.module.css";
-import '../../trip.css';
+import '../../mainPage/trip.css';
 
 
 

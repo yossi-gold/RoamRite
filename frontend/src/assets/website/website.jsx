@@ -1,20 +1,63 @@
 import DomeGallery from './DomeGallery';
 import styles from './website.module.css';
-import { useEffect } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { DollarSign, Users, MessageCircle, Map, Calendar, ChevronRight, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { MenuModal } from './menuBox';
+import { useTripInfo } from '../trip/context'
 
 
 
 export const Website = () => {
+    const { loggedIn, firstName } = useTripInfo();
+    const UserSettingsRef = useRef(null);
+    const UserSettingsRef2 = useRef(null);
+    const menuRef = useRef(null);
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [isOptionsOpen, setIsOptionsOpen] = useState(false)
 
 
     useEffect(() => {
         document.title = 'RoamRite - Your Ultimate Travel Companion';
         document.body.style.backgroundColor = 'black';
-    })
+    }, [])
 
 
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (!UserSettingsRef.current.contains(event.target) && !UserSettingsRef2.current.contains(event.target)) {
+                setIsOptionsOpen(false);
+                console.log('i do it')
+            } else { console.log(UserSettingsRef) }
+        }
+        if (loggedIn && isOptionsOpen) {
+            document.addEventListener("click", handleClickOutside);
+            console.log(isOptionsOpen)
+        }
+
+
+        // ✅ cleanup on unmount
+        return () => {
+            document.removeEventListener("click", handleClickOutside);
+        };
+    }, [loggedIn, isOptionsOpen]);
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (!menuRef.current.contains(event.target)) {
+                setMenuOpen(false);
+            } else { console.log('ops') }
+        }
+        if (menuOpen) {
+            document.addEventListener("click", handleClickOutside);
+        }
+
+
+        // ✅ cleanup on unmount
+        return () => {
+            document.removeEventListener("click", handleClickOutside);
+        };
+    }, [menuOpen]);
 
 
     //const [scrolled, setScrolled] = useState(false);
@@ -27,24 +70,26 @@ export const Website = () => {
       return () => window.removeEventListener('scroll', handleScroll);
     }, []); */
 
+
+
     const features = [
         {
             icon: <DollarSign className="w-8 h-8" />,
             title: "Expense Breakdown",
             description: "Track every dollar with detailed categorization. Real-time budget monitoring with color-coded alerts keeps you informed and in control of your spending.",
-            screenshot: "./expenseBreakdown.png"
+            screenshot: "/expenseBreakdown.png"
         },
         {
             icon: <Map className="w-8 h-8" />,
             title: "Activity Suggestions",
             description: "AI-powered recommendations tailored to your budget. Discover experiences that fit your financial plan and maximize your adventure without overspending.",
-            screenshot: "./activitySuggestions.png"
+            screenshot: "/activitySuggestions.png"
         },
         {
             icon: <Calendar className="w-8 h-8" />,
             title: "Multi-Trip Management",
             description: "Organize unlimited trips in one place. Switch between past, current, and future adventures seamlessly with comprehensive trip history.",
-            screenshot: "./multiTripManagement3.png"
+            screenshot: "/multiTripManagement3.png"
         }
     ];
 
@@ -73,31 +118,119 @@ export const Website = () => {
 
     return (<div style={{ backgroundColor: 'black' }}>
 
-<div className={styles.headerContainer} id='top'>
-    <header className={styles.header}>
-            <div className={styles.rightSection}>
-                <a href='#top'>Welcome</a>
-                <a href='#features'>Features</a>
-                {/* <Link>Contact</Link> */}
-                <Link>About us</Link>
-                <Link to={'/login'}>Login/Signup</Link>
+        <div className={styles.headerContainer} id='top'>
+            <header className={styles.header}>
+
+                <div className={styles.bigSection}>
+                    <a href='#top'>Welcome</a>
+                    <a href='#features'>Features</a>
+
+                    <Link to={'/about'}>About us</Link>
+
+
+                    {!loggedIn && <Link to={'/login'}>Login/Signup</Link>}
+
+                    {loggedIn &&
+                    
+                        <div className={styles.profileCon}>
+                            {console.log(isOptionsOpen)}
+                            <div className={styles.name}>Hello, {firstName}</div>
+                            <div className={styles.profile} ref={UserSettingsRef} onClick={() => setIsOptionsOpen((prev)=>!prev)}>
+                                <p>{firstName?.[0] || '—'}</p>
+                                 {isOptionsOpen &&
+                                    <div className={styles.options} onClick={(e) => e.stopPropagation()}>
+                                        <div style={{ display: 'flex', justifyContent: 'flex-end' }} >
+                                            <svg onClick={() => setIsOptionsOpen(false)} style={{ cursor: 'pointer' }} xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="m336-280-56-56 144-144-144-143 56-56 144 144 143-144 56 56-144 143 144 144-56 56-143-144-144 144Z" /></svg>
+                                        </div>
+                                        <div>
+                                            <Link to={'/add_expense'} className={styles.dashboardLink}>
+                                                <p>Your Dashboard</p>
+                                                {/*  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="beige"><path d="M413-480q17 0 28.5-11.5T453-520q0-17-11.5-28.5T413-560q-17 0-28.5 11.5T373-520q0 17 11.5 28.5T413-480Zm-133 0q17 0 28.5-11.5T320-520q0-17-11.5-28.5T280-560q-17 0-28.5 11.5T240-520q0 17 11.5 28.5T280-480Zm267 0q17 0 28.5-11.5T587-520q0-17-11.5-28.5T547-560q-17 0-28.5 11.5T507-520q0 17 11.5 28.5T547-480Zm133 0q17 0 28.5-11.5T720-520q0-17-11.5-28.5T680-560q-17 0-28.5 11.5T640-520q0 17 11.5 28.5T680-480ZM160-320h640v-400H160v400Zm320 160q-99 0-169.5-13.5T240-206v-34h-80q-33 0-56.5-23.5T80-320v-400q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v400q0 33-23.5 56.5T800-240h-80v34q0 19-70.5 32.5T480-160Zm0-360Z"/></svg>
+                                                                         */}
+                                            </Link>
+
+
+                                        </div>
+
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                    }
+
+
+
+                </div>
+                <div className={styles.smallSection}>
+                    <div ref={menuRef}>
+                        <button className={styles.menu} onClick={() => setMenuOpen((prev) => !prev)}>
+                            {menuOpen ?
+                                <svg xmlns="http://www.w3.org/2000/svg" height="38px" viewBox="0 -960 960 960" width="38px" fill="#FFFFFF"><path d="m476-420 84-84 84 84 56-56-84-84 84-84-56-56-84 84-84-84-56 56 84 84-84 84 56 56ZM320-240q-33 0-56.5-23.5T240-320v-480q0-33 23.5-56.5T320-880h480q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H320Zm0-80h480v-480H320v480ZM160-80q-33 0-56.5-23.5T80-160v-560h80v560h560v80H160Zm160-720v480-480Z" /></svg>
+                                :
+                                <svg xmlns="http://www.w3.org/2000/svg" height="38px" viewBox="0 -960 960 960" width="38px" fill="#FFFFFF"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" /></svg>
+                            }
+                        </button>
+                        {menuOpen && <MenuModal />}
+
+                    </div>
+
+
+
+                    {!loggedIn &&
+                        <Link to={'/login'}>
+                            <svg xmlns="http://www.w3.org/2000/svg" height="38px" viewBox="0 -960 960 960" width="38px" fill="#FFFFFF"><path d="M480-120v-80h280v-560H480v-80h280q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H480Zm-80-160-55-58 102-102H120v-80h327L345-622l55-58 200 200-200 200Z" /></svg>
+                        </Link>
+                    }
+                    {loggedIn &&
+                        <div className={styles.profileCon}>
+                            <div className={styles.name}>Hello, {firstName}</div>
+                            <div className={styles.profile} ref={UserSettingsRef2} onClick={() => setIsOptionsOpen((prev)=>!prev)}>
+                                <p>{firstName?.[0] || '—'}</p>
+
+
+                                {isOptionsOpen &&
+                                    <div className={styles.options} onClick={(e) => e.stopPropagation()}>
+                                        <div style={{ display: 'flex', justifyContent: 'flex-end' }} >
+                                            <svg onClick={() => setIsOptionsOpen(false)} style={{ cursor: 'pointer' }} xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="m336-280-56-56 144-144-144-143 56-56 144 144 143-144 56 56-144 143 144 144-56 56-143-144-144 144Z" /></svg>
+                                        </div>
+                                        <div>
+                                            <Link to={'/add_expense'} className={styles.dashboardLink}>
+                                                <p>Your Dashboard</p>
+                                                {/*  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="beige"><path d="M413-480q17 0 28.5-11.5T453-520q0-17-11.5-28.5T413-560q-17 0-28.5 11.5T373-520q0 17 11.5 28.5T413-480Zm-133 0q17 0 28.5-11.5T320-520q0-17-11.5-28.5T280-560q-17 0-28.5 11.5T240-520q0 17 11.5 28.5T280-480Zm267 0q17 0 28.5-11.5T587-520q0-17-11.5-28.5T547-560q-17 0-28.5 11.5T507-520q0 17 11.5 28.5T547-480Zm133 0q17 0 28.5-11.5T720-520q0-17-11.5-28.5T680-560q-17 0-28.5 11.5T640-520q0 17 11.5 28.5T680-480ZM160-320h640v-400H160v400Zm320 160q-99 0-169.5-13.5T240-206v-34h-80q-33 0-56.5-23.5T80-320v-400q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v400q0 33-23.5 56.5T800-240h-80v34q0 19-70.5 32.5T480-160Zm0-360Z"/></svg>
+                                                                         */}
+                                            </Link>
+
+
+                                        </div>
+
+                                    </div>
+                                }
+
+
+                            </div>
+                        </div>
+                    }
+
+
+                </div>
+
+
+            </header>
+
+            <div className={styles.DomeGalleryContainer} >
+                <DomeGallery className={styles.domeGallery} >
+
+                </DomeGallery>
+                <img className={styles.logo} src="./preview.webp" alt="logo" />
+                {/*    <img className={styles.logo} src="./logo.jpg" alt="logo" /> */}
+
             </div>
-
-        </header>
-
-        <div className={styles.DomeGalleryContainer} >
-            <DomeGallery className={styles.domeGallery} >
-
-            </DomeGallery>
-            <img className={styles.logo} src="./preview.webp" alt="logo" />
-            {/*    <img className={styles.logo} src="./logo.jpg" alt="logo" /> */}
 
         </div>
 
-</div>
-        
-        
-        
+
+
 
 
         <div className={`relative min-h-screen bg-black`} >
@@ -311,7 +444,7 @@ export const Website = () => {
                         ))}
                     </div>
 
-                   
+
 
                 </div>
             </section>
@@ -348,7 +481,7 @@ export const Website = () => {
                 </div>
             </footer>
         </div>
-     
+
 
 
     </div>
